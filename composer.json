@@ -1,0 +1,36 @@
+{
+  "name": "movingimage24/behat-silex-extension",
+  "type": "behat-extension",
+  "description": "Silex extension for Behat",
+  "keywords": [
+    "silex",
+    "framework",
+    "bdd"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander Miehe",
+      "email": "alexander.miehe@movingimage24.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3",
+    "behat/behat": "~3.0,>=3.0.4",
+    "silex/silex": "~1.2"
+  },
+  "require-dev": {
+    "behat/mink-extension": "~2.0",
+    "behat/mink-browserkit-driver": "~1.0",
+    "phpspec/phpspec": "~2.0",
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {"Mi24\\Behat\\SilexExtension\\": "src/"}
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
