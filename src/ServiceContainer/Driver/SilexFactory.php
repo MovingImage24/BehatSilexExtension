@@ -41,7 +41,7 @@ class SilexFactory implements DriverFactory
      */
     public function buildDriver(array $config)
     {
-        if (!class_exists('Behat\Mink\Driver\BrowserKitDriver')) {
+        if (class_exists('Behat\Mink\Driver\BrowserKitDriver') === false) {
             // @codeCoverageIgnoreStart
             // the composer dev requirements makes it impossible to test this
             throw new \RuntimeException(

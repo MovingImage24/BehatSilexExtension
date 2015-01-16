@@ -26,10 +26,10 @@ class SilexExtension implements Extension
 
         // find and require bootstrap
         $bootstrapPath = $container->getParameter(self::APPLICATION_ID.'.bootstrap');
-        if ($bootstrapPath) {
-            if (file_exists($bootstrap = $basePath.DIRECTORY_SEPARATOR.$bootstrapPath)) {
+        if (strlen($bootstrapPath) > 0) {
+            if (file_exists($bootstrap = $basePath.DIRECTORY_SEPARATOR.$bootstrapPath) === true) {
                 require_once $bootstrap;
-            } elseif (file_exists($bootstrapPath)) {
+            } elseif (file_exists($bootstrapPath) === true) {
                 require_once $bootstrapPath;
             }
         }
@@ -38,15 +38,15 @@ class SilexExtension implements Extension
         $application     = null;
         $applicationPath = $container->getParameter(self::APPLICATION_ID.'.path');
         // find and require kernel
-        if (file_exists($fullPath = $basePath.DIRECTORY_SEPARATOR.$applicationPath)) {
+        if (file_exists($fullPath = $basePath.DIRECTORY_SEPARATOR.$applicationPath) === true) {
             $application     = require_once $fullPath;
             $applicationPath = $fullPath;
-        } elseif (file_exists($applicationPath)) {
+        } elseif (file_exists($applicationPath) === true) {
             $application = require_once $applicationPath;
         }
 
         /** @var Application $application */
-        if (!$application instanceof Application) {
+        if ($application instanceof Application === false) {
             throw new \InvalidArgumentException(
                 sprintf('Application loaded from "%s" is not an instance of "Silex/Application".', $applicationPath)
             );
