@@ -32,7 +32,7 @@ class SilexExtensionSpec extends ObjectBehavior
         $minkExtension->registerDriverFactory(
             Argument::type('Mi24\Behat\SilexExtension\ServiceContainer\Driver\SilexFactory')
         )->shouldBeCalled();
-        $extensionManager = new ExtensionManager([$minkExtension->getWrappedObject()]);
+        $extensionManager = new ExtensionManager(array($minkExtension->getWrappedObject()));
         $this->initialize($extensionManager);
     }
 
