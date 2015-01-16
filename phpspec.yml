@@ -1,0 +1,14 @@
+suites:
+  behat_suite:
+    namespace: Mi24\Behat\SilexExtension
+    psr4_prefix: Mi24\Behat\SilexExtension
+extensions:
+    - PhpSpec\Extension\CodeCoverageExtension
+
+code_coverage:
+  format:
+    - html
+    - clover
+  output:
+    html: vendor/build
+    clover: coverage.clover

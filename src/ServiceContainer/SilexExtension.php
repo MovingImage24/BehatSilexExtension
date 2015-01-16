@@ -25,31 +25,35 @@ class SilexExtension implements Extension
         $basePath = $container->getParameter('paths.base');
 
         // find and require bootstrap
-        $bootstrapPath = $container->getParameter(self::APPLICATION_ID . '.bootstrap');
+        $bootstrapPath = $container->getParameter(self::APPLICATION_ID.'.bootstrap');
         if ($bootstrapPath) {
-            if (file_exists($bootstrap = $basePath . '/' . $bootstrapPath)) {
-                require_once($bootstrap);
+            if (file_exists($bootstrap = $basePath.DIRECTORY_SEPARATOR.$bootstrapPath)) {
+                require_once $bootstrap;
             } elseif (file_exists($bootstrapPath)) {
-                require_once($bootstrapPath);
+                require_once $bootstrapPath;
             }
         }
 
         // find and require application
-        $application = null;
-        $applicationPath = $container->getParameter(self::APPLICATION_ID . '.path');
+        $application     = null;
+        $applicationPath = $container->getParameter(self::APPLICATION_ID.'.path');
         // find and require kernel
-        if (file_exists($fullPath = $basePath . DIRECTORY_SEPARATOR . $applicationPath)) {
-            $application = require_once $fullPath;
+        if (file_exists($fullPath = $basePath.DIRECTORY_SEPARATOR.$applicationPath)) {
+            $application     = require_once $fullPath;
+            $applicationPath = $fullPath;
         } elseif (file_exists($applicationPath)) {
             $application = require_once $applicationPath;
         }
 
         /** @var Application $application */
-        if ($application) {
-
-            $application['debug'] = $container->getParameter(self::APPLICATION_ID . '.debug');
-            $container->set(self::APPLICATION_ID, $application);
+        if (!$application instanceof Application) {
+            throw new \InvalidArgumentException(
+                sprintf('Application loaded from "%s" is not an instance of "Silex/Application".', $applicationPath)
+            );
         }
+
+        $application['debug'] = $container->getParameter(self::APPLICATION_ID.'.debug');
+        $container->set(self::APPLICATION_ID, $application);
     }
 
     /**
@@ -72,6 +76,8 @@ class SilexExtension implements Extension
 
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function configure(ArrayNodeDefinition $builder)
     {
@@ -95,8 +101,8 @@ class SilexExtension implements Extension
      */
     public function load(ContainerBuilder $container, array $config)
     {
-        $container->setParameter(self::APPLICATION_ID . '.path', $config['app']['path']);
-        $container->setParameter(self::APPLICATION_ID . '.debug', $config['app']['debug']);
-        $container->setParameter(self::APPLICATION_ID . '.bootstrap', $config['app']['bootstrap']);
+        $container->setParameter(self::APPLICATION_ID.'.path', $config['app']['path']);
+        $container->setParameter(self::APPLICATION_ID.'.debug', $config['app']['debug']);
+        $container->setParameter(self::APPLICATION_ID.'.bootstrap', $config['app']['bootstrap']);
     }
 }

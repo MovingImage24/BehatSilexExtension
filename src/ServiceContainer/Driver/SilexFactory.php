@@ -42,9 +42,12 @@ class SilexFactory implements DriverFactory
     public function buildDriver(array $config)
     {
         if (!class_exists('Behat\Mink\Driver\BrowserKitDriver')) {
+            // @codeCoverageIgnoreStart
+            // the composer dev requirements makes it impossible to test this
             throw new \RuntimeException(
                 'Install MinkBrowserKitDriver in order to use the silex driver.'
             );
+            // @codeCoverageIgnoreEnd
         }
 
         return new Definition('Mi24\Behat\SilexExtension\Driver\ApplicationDriver', array(

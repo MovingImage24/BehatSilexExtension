@@ -8,6 +8,8 @@ use Symfony\Component\HttpKernel\Client;
 
 /**
  * @author Alexander Miehe <alexander.miehe@movingimage24.com>
+ *
+ * @codeCoverageIgnore
  */
 class ApplicationDriver extends BrowserKitDriver
 {
